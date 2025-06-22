@@ -22,6 +22,5 @@ Este arquivo ja se encontra praticamente bem estruturado mas caso de melhoria ou
 5. script.js
 Neste arquivo JS sim quero auterações, vamos nós reunir descutir as auterações principalmente a turma do back end e de dados
 
-
-
+AQUI VOCÊ AQUI PODE ENTRAR NA COMUNIDADE : https://discord.gg/q6xawQyU
    
