@@ -1,0 +1,138 @@
+/* style.css (Versão Otimizada para Responsividade com Flexbox) */
+
+/* Reset básico para começar do zero (boa prática) */
+* {
+    box-sizing: border-box; /* Garante que padding e border sejam incluídos na largura/altura */
+}
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 20px;
+    background-color: #f4f4f4;
+    min-height: 100vh; /* Garante que o body ocupe a altura mínima da tela */
+    display: flex; /* Adiciona flex para o body para centralizar o main */
+    flex-direction: column; /* Organiza os filhos em coluna */
+}
+
+header {
+    background-color: #333;
+    color: white;
+    padding: 10px 0;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+#loading-message { /* Estilo para a mensagem de carregamento */
+    text-align: center;
+    font-size: 1.2em;
+    color: #555;
+    margin: 20px 0;
+}
+
+main {
+    flex-grow: 1; /* Faz o main ocupar o espaço restante, empurrando o footer para baixo */
+}
+
+.products-container {
+    /* *** GRANDE MUDANÇA AQUI: De display: block para Flexbox! *** */
+    display: flex;         /* Habilita o contexto flex para os filhos (.product-card) */
+    flex-wrap: wrap;       /* Permite que os itens "quebrem" para a próxima linha se não houver espaço */
+    justify-content: center; /* Centraliza os itens horizontalmente quando não preenchem a linha */
+    gap: 20px;             /* Cria um espaçamento consistente entre os cards (melhor que margin para grid/flex) */
+
+    max-width: 1200px;     /* Define uma largura máxima para o contêiner para não esticar demais em telas grandes */
+    margin: 0 auto;        /* Centraliza o contêiner na página */
+    padding: 10px;         /* Preenchimento interno */
+    /* Removemos width: 90% e overflow: auto daqui, pois Flexbox lida melhor */
+}
+
+.product-card {
+    /* *** GRANDE MUDANÇA AQUI: Largura flexível para os cards! *** */
+    /* 'flex: 1 1 300px;' é um shorthand para:
+       - flex-grow: 1 (Permite que o item cresça para ocupar espaço extra, se houver)
+       - flex-shrink: 1 (Permite que o item encolha se não houver espaço suficiente)
+       - flex-basis: 300px (Sugere uma largura base de 300px para o item antes de crescer/encolher)
+       Isso cria cards que tentam ter 300px, mas se adaptam. */
+    flex: 1 1 300px;
+    min-width: 250px; /* Garante que o card não fique menor que 250px em telas pequenas, evitando quebra de conteúdo */
+
+    border: 1px solid #ddd;
+    padding: 15px;
+    background-color: white;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    display: flex; /* Faz o conteúdo interno do card também ser flex para melhor layout (imagem, título, etc.) */
+    flex-direction: column; /* Organiza os itens internos em coluna (um abaixo do outro) */
+}
+
+.product-card img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin-bottom: 10px;
+}
+
+.product-card h2 {
+    font-size: 1.2em;
+    margin-top: 0;
+}
+
+.product-card p {
+    font-size: 0.9em;
+    color: #666;
+    flex-grow: 1; /* Faz a descrição ocupar o espaço restante, empurrando o preço/botão para baixo */
+}
+
+.product-card .price {
+    font-size: 1.5em;
+    color: #e67e22;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.product-card button {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    cursor: pointer;
+    margin-top: 15px;
+    /* Removemos width: 100% daqui para que o botão possa ter uma largura natural ou limitada */
+    align-self: center; /* Centraliza o botão dentro do card flex container */
+    max-width: 200px; /* Adiciona um limite para o tamanho do botão em cards muito grandes */
+}
+
+/* *** MEDIA QUERIES para Adaptação em Diferentes Tamanhos de Tela *** */
+
+/* Para telas menores (celulares) - 1 coluna */
+@media (max-width: 599px) {
+    .products-container {
+        justify-content: center; /* Garante que o único item por linha fique centralizado */
+    }
+    .product-card {
+        flex: 1 1 90%; /* Ocupa quase 100% da largura, com alguma margem */
+        max-width: 350px; /* Limita o tamanho máximo do card em telas pequenas para não ficar muito largo */
+    }
+}
+
+/* Para telas médias (tablets) - 2 colunas */
+@media (min-width: 600px) and (max-width: 991px) {
+    .product-card {
+        flex: 1 1 calc(50% - 20px); /* 2 colunas, subtraindo o gap */
+        /* calc(50% - <gap-value>/2) para 2 colunas ou calc(33.33% - <gap-value>*2/3) para 3 colunas */
+    }
+}
+
+/* Para telas grandes (desktops) - 3 colunas (já definido pelo flex-basis: 300px no .product-card) */
+@media (min-width: 992px) {
+    .product-card {
+        flex: 1 1 calc(33.33% - 20px); /* Tenta 3 colunas, ajustando para o gap */
+    }
+}
+
+/* Exemplo de media query para telas ULTRA-LARGAS, se quiser mais de 3 colunas */
+@media (min-width: 1400px) {
+    .product-card {
+        flex: 1 1 calc(25% - 20px); /* Tenta 4 colunas */
+    }
+}
